@@ -25,15 +25,16 @@ export default function AdminLayout({ auth, header, children }) {
 
         <main id="content" className="p-5">
           <BreadcrumSection />
-          <AdminCardSection1 />
+          {children}
+          {/* <AdminCardSection1 /> */}
           {/* <ChartSection1 /> */}
-          <TableSection />
+          {/* <TableSection /> */}
           {/* <ChartSection2 /> */}
-          <MDBRow className="mb-4">
+          {/* <MDBRow className="mb-4"> */}
             {/* <MapSection /> */}
             {/* <ModalSection /> */}
-          </MDBRow>
-          <AdminCardSection2 />
+          {/* </MDBRow> */}
+          {/* <AdminCardSection2 /> */}
         </main>
         <Footer />
       </div>

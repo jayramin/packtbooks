@@ -1,9 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import AdminLayout from "@/Layouts/AdminLayout";
 import { Head } from "@inertiajs/inertia-react";
+import { Elasticsearch, Results, SearchBox, Facet } from "react-elasticsearch";
 
 export default function Books(props) {
+    const [somedata, setSometData] = useState("State Inti Val");
+    const [loader, setLoader] = useState(false);
+    let myData = "";
+    useEffect(async () => {
+        await fetch("http://localhost:8000/api/allproducts")
+            .then((res) => res.json())
+            .then((responseData) => {
+                console.log(responseData);
+                myData = Object.entries(responseData).map(
+                    ([anythingreferetokey, val], i) => {
+                        return <li key={i}>{val.title}</li>;
+                    }
+                );
+                setSometData(myData);
+                setLoader(true);
+                console.log(myData);
+            });
+    }, []);
     return (
         <AdminLayout
             auth={props.auth}
@@ -19,7 +38,23 @@ export default function Books(props) {
             <div className="mx-auto ">
                 <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div className="p-6 bg-white border-b border-gray-200">
-                        Books data
+                        <Elasticsearch url="http://localhost:8000/api/allproducts">
+                            <SearchBox id="mainSearch" fields={["title"]} />
+                            <Results
+                                id="results"
+                                items={(data) => {
+                                    console.log(data);
+                                    // Map on result hits and display whatever you want.
+                                    return data.map((item) => (
+                                        <MyCardItem
+                                            key={item._id}
+                                            source={item._source}
+                                        />
+                                    ));
+                                }}
+                            />
+                        </Elasticsearch>
+                        <ul>{loader ? somedata : "Loading....."}</ul>
                     </div>
                 </div>
             </div>

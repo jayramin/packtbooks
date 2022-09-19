@@ -49,7 +49,7 @@ class BooksController extends Controller
      */
     
     public function show(Books $books,Author $author){
-        dd($this->BooksData());
+        return $this->BooksData();
         // $books = Books::with(['author', 'publisher'])->get();
         // foreach ($books as $book) {
         //     $AuthorName[] = $book->

@@ -32,6 +32,33 @@ const TopNavigation = () => {
                         Books
                     </MDBListGroupItem>
                 </Link>
+                <Link
+                    href="/author"
+                    className={url === "/author" ? "activeClass" : ""}
+                >
+                    <MDBListGroupItem>
+                        <MDBIcon icon="user" className="mr-3" />
+                        Author
+                    </MDBListGroupItem>
+                </Link>
+                <Link
+                    href="/publisher"
+                    className={url === "/publisher" ? "activeClass" : ""}
+                >
+                    <MDBListGroupItem>
+                        <MDBIcon fas icon="sync-alt" className="mr-3"  />
+                        Publisher
+                    </MDBListGroupItem>
+                </Link>
+                <Link
+                    href="/genre"
+                    className={url === "/genre" ? "activeClass" : ""}
+                >
+                    <MDBListGroupItem>
+                    <MDBIcon fas icon="fas fa-book-open" className="mr-3"  />
+                        Genre
+                    </MDBListGroupItem>
+                </Link>
 
                 <Link href="/404">
                     <MDBListGroupItem>

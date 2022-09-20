@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Traits;
 use App\Models\Books;
+use \Illuminate\Pagination\Paginator;
+
 trait BooksTrait {
     public function BooksData() {
         $books = Books::with(['author', 'publisher','genre'])->get();
@@ -16,7 +18,9 @@ trait BooksTrait {
             "publisher"=>$book->publisher->publisher_name,
             );
         }
-        return $BooksData;
+        $BooksPaginateData = new Paginator($BooksData, 10);
+        return $BooksPaginateData;
+        return $BooksData->paginate(10)->toArray();
     }
 }
 

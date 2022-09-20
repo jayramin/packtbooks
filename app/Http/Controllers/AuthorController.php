@@ -33,9 +33,12 @@ class AuthorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,Author $author)
     {
-        //
+        $author->author_name = $request->author_name;
+        $author->author_description = $request->author_description;
+        $author->save();
+        return $author->get();
     }
 
     /**
@@ -46,6 +49,7 @@ class AuthorController extends Controller
      */
     public function show(Author $author)
     {
+        return $author->get();
         //
     }
 

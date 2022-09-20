@@ -33,9 +33,14 @@ class GenreController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,Genre $genre)
     {
-        //
+        $genre->title = $request->title;
+        $genre->description = $request->description;
+        $genre->save();
+        
+        $genre = Genre::paginate(10);
+        return $genre;
     }
 
     /**
@@ -46,6 +51,9 @@ class GenreController extends Controller
      */
     public function show(Genre $genre)
     {
+        $genre = Genre::paginate(10);
+        return $genre;
+        // return $genre->get();
         //
     }
 

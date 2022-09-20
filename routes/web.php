@@ -27,8 +27,24 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
 Route::get('/books', function () {
     return Inertia::render('Books');
 })->middleware(['auth', 'verified'])->name('books');
+Route::get('/addnewbook', function () {
+    return Inertia::render('AddNewBooks');
+})->middleware(['auth', 'verified'])->name('addnewbook');
+
+
+Route::get('/author', function () {
+    return Inertia::render('Author');
+})->middleware(['auth', 'verified'])->name('author');
+Route::get('/genre', function () {
+    return Inertia::render('Genre');
+})->middleware(['auth', 'verified'])->name('genre');
+Route::get('/publisher', function () {
+    return Inertia::render('Publisher');
+})->middleware(['auth', 'verified'])->name('publisher');
 
 require __DIR__.'/auth.php';

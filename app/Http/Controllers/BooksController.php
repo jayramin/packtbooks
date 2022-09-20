@@ -7,6 +7,8 @@ use App\Models\Books;
 use Illuminate\Http\Request;
 
 use App\Http\Traits\BooksTrait;
+use Validator;
+
 class BooksController extends Controller
 {
     use BooksTrait;
@@ -25,6 +27,17 @@ class BooksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function imageupload(Request $request)
+    {
+        $image = $request->file('image');
+        if ($request->hasFile('image')) {
+            $new_name = rand() . "." . $image->getClientOriginalExtension();
+            $image->move(public_path('images'), $new_name);
+            return response()->json($new_name);
+        } else {
+            return response()->json("image null");
+        }
+    }
     public function create()
     {
         //
@@ -36,9 +49,18 @@ class BooksController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Books $books)
     {
-        //
+        $books->title = $request->title;
+        $books->description = $request->description;
+        $books->isbn = $request->isbn;
+        $books->image = "default.jpg";
+        $books->published = date("Y-m-d");
+        $books->publisher_id = $request->publisher_id;
+        $books->genre_id = $request->genre_id;
+        $books->author_id  = $request->author_id;
+        $books->save();
+        
     }
 
     /**
@@ -47,19 +69,14 @@ class BooksController extends Controller
      * @param  \App\Models\Books  $books
      * @return \Illuminate\Http\Response
      */
-    
-    public function show(Books $books,Author $author){
-        return $this->BooksData();
-        // $books = Books::with(['author', 'publisher'])->get();
-        // foreach ($books as $book) {
-        //     $AuthorName[] = $book->
-        //     ->author_name;
-        //     $AuthorName[] = $book->publisher->publisher_name;
-        // }
-        // dd($AuthorName);
 
-        // $BooksWithAuthor = Books::with('authors')->get();
-        //
+    public function show(Books $books, Author $author)
+    {
+        // dd($this->BooksData());
+        return $this->BooksData();
+        // $BooksArray = $this->BooksData();
+        // $BooksPaginate = $BooksArray::paginate(10);
+        // return $BooksPaginate;
     }
 
     /**

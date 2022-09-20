@@ -33,9 +33,13 @@ class PublisherController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,Publisher $publisher)
     {
         //
+        $publisher->publisher_name = $request->publisher_name;
+        $publisher->publisher_details = $request->publisher_details;
+        $publisher->save();
+        return $publisher->get();
     }
 
     /**
@@ -46,6 +50,7 @@ class PublisherController extends Controller
      */
     public function show(Publisher $publisher)
     {
+        return $publisher->get();
         //
     }
 

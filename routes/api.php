@@ -19,6 +19,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::get('/allproducts', [App\Http\Controllers\BooksController::class, 'show']);
+Route::get('/allpublisherapi', [App\Http\Controllers\PublisherController::class, 'showapi']);
+Route::get('/allauthorsapi', [App\Http\Controllers\AuthorController::class, 'showapi']);
+Route::get('/allgenreapi', [App\Http\Controllers\GenreController::class, 'showapi']);
 Route::get('/allpublisher', [App\Http\Controllers\PublisherController::class, 'show']);
 Route::get('/allauthors', [App\Http\Controllers\AuthorController::class, 'show']);
 Route::get('/allgenre', [App\Http\Controllers\GenreController::class, 'show']);

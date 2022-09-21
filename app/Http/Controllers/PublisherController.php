@@ -48,10 +48,15 @@ class PublisherController extends Controller
      * @param  \App\Models\Publisher  $publisher
      * @return \Illuminate\Http\Response
      */
+    public function showapi(Publisher $publisher){
+        return $publisher->get();
+
+    }
     public function show(Publisher $publisher)
     {
-        return $publisher->get();
-        //
+        $Publisher = Publisher::paginate(10);
+        return $Publisher;
+        // return $publisher->get();
     }
 
     /**

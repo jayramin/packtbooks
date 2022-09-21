@@ -47,9 +47,13 @@ class AuthorController extends Controller
      * @param  \App\Models\Author  $author
      * @return \Illuminate\Http\Response
      */
-    public function show(Author $author)
-    {
+    public function showapi(Author $author){
         return $author->get();
+    }
+    public function show(Author $author){
+        $Author = Author::paginate(10);
+        return $Author;
+        // return $author->get();
         //
     }
 

@@ -49,6 +49,9 @@ class GenreController extends Controller
      * @param  \App\Models\Genre  $genre
      * @return \Illuminate\Http\Response
      */
+    public function showapi(Genre $genre){
+        return $genre->get();
+    }
     public function show(Genre $genre)
     {
         $genre = Genre::paginate(10);

@@ -29,8 +29,13 @@ class BooksController extends Controller
      */
     public function imageupload(Request $request)
     {
-        $image = $request->file('image');
-        if ($request->hasFile('image')) {
+        $image = $request->image;
+        return response()->json($request->image);
+
+        dd(json_encode($request->image));
+
+        $image->getClientOriginalExtension();
+        if ($request->image) {
             $new_name = rand() . "." . $image->getClientOriginalExtension();
             $image->move(public_path('images'), $new_name);
             return response()->json($new_name);

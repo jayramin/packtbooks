@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 // import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import AdminLayout from "@/Layouts/AdminLayout";
-import { Head, Link, useForm } from "@inertiajs/inertia-react";
-import { Elasticsearch, Results, SearchBox, Facet } from "react-elasticsearch";
+import { Head, useForm } from "@inertiajs/inertia-react";
 import TextInput from "@/Components/TextInput";
 import InputLabel from "@/Components/InputLabel";
 import InputError from "@/Components/InputError";
-import { MDBIcon } from "mdbreact";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextArea from "@/Components/TextArea";
 import axios from "axios";
 import Pagination from "react-js-pagination";
+import { Elasticsearch, Results, SearchBox, Facet } from "react-elasticsearch";
+import { MDBIcon } from "mdbreact";
 import { parse } from "postcss";
 
 export default function Genre(props) {
@@ -104,55 +104,23 @@ export default function Genre(props) {
                             <div className="row">
                                 <div className="col-4">
                                     <div>
-                                        <InputLabel
-                                            forInput="title"
-                                            value="Title"
-                                        />
-                                        <TextInput
-                                            type="text"
-                                            name="title"
-                                            value={data.name}
-                                            className="mt-1 block w-full"
-                                            autoComplete="title"
-                                            isFocused={true}
-                                            handleChange={onHandleChange}
-                                            required
-                                        />
+                                        <InputLabel forInput="title" value="Title" />
+                                        <TextInput type="text" name="title" value={data.name} className="mt-1 block w-full" autoComplete="title" isFocused={true} handleChange={onHandleChange} required />
 
-                                        <InputError
-                                            message={errors.title}
-                                            className="mt-2"
-                                        />
+                                        <InputError message={errors.title} className="mt-2" />
                                     </div>
                                 </div>
                                 <div className="col-4">
                                     <div>
-                                        <InputLabel
-                                            forInput="description"
-                                            value="description"
-                                        />
-                                        <TextArea
-                                            name="description"
-                                            value={data.description}
-                                            className="mt-1 block w-full"
-                                            autoComplete="description"
-                                            isFocused={true}
-                                            handleChange={onHandleChange}
-                                            required
-                                        />
+                                        <InputLabel forInput="description" value="description" />
+                                        <TextArea name="description" value={data.description} className="mt-1 block w-full" autoComplete="description" isFocused={true} handleChange={onHandleChange} required />
 
-                                        <InputError
-                                            message={errors.name}
-                                            className="mt-2"
-                                        />
+                                        <InputError message={errors.name} className="mt-2" />
                                     </div>
                                 </div>
                                 <div className="col-4 mt-auto">
                                     <div>
-                                        <PrimaryButton
-                                            className="ml-4"
-                                            processing={processing}
-                                        >
+                                        <PrimaryButton  className="ml-4"  processing={processing} >
                                             Add new
                                         </PrimaryButton>
                                     </div>

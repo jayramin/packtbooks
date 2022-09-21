@@ -29,12 +29,10 @@ class BooksController extends Controller
      */
     public function imageupload(Request $request)
     {
-        $image = $request->image;
-        return response()->json($request->image);
-
-        dd(json_encode($request->image));
-
-        $image->getClientOriginalExtension();
+        $image = $request->file('image');
+        // return response()->json($request->file());
+        // dd($request->image);
+        // $image->getClientOriginalExtension()
         if ($request->image) {
             $new_name = rand() . "." . $image->getClientOriginalExtension();
             $image->move(public_path('images'), $new_name);
@@ -59,7 +57,7 @@ class BooksController extends Controller
         $books->title = $request->title;
         $books->description = $request->description;
         $books->isbn = $request->isbn;
-        $books->image = "default.jpg";
+        $books->image = $request->image;
         $books->published = date("Y-m-d");
         $books->publisher_id = $request->publisher_id;
         $books->genre_id = $request->genre_id;

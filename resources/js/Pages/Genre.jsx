@@ -155,7 +155,7 @@ export default function Genre(props) {
                             <tfoot>
                                 <tr>
                                     <td colSpan={3}>
-                                    {JSON.stringify(genredata?.genre) }
+                                    {/* {JSON.stringify(genredata?.genre) } */}
                                         <Pagination
                                             activePage={
                                                 genredata?.genre?.current_page

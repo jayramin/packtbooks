@@ -7,6 +7,7 @@ import InputLabel from "@/Components/InputLabel";
 import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextArea from "@/Components/TextArea";
+import Dropzone from "react-dropzone-uploader";
 export default function AddNewBooks(props) {
     
     const [commonData, setCommonData] = useState({});
@@ -14,6 +15,7 @@ export default function AddNewBooks(props) {
     const { data, setData, post, processing, errors, reset } = useForm({
         title: "",
         description: "",
+        image: "",
     });
     
     // let [myDataAuthors,myDataGenre,myDataPubliehser] = ("","","");
@@ -38,29 +40,59 @@ export default function AddNewBooks(props) {
             genre: await apiGenre.json(),
         });
     };
-    const onFileChange = event => {
-        setFilesData({ image: event.target.files[0] });
-      };
+  
+      const getUploadParams = ({ meta }) => { return { url: 'https://httpbin.org/post' } }
+  
+      // called every time a file's `status` changes
+      const handleChangeStatus = ({ meta, file }, status) => { setFilesData(file); }
       
-      // On file upload (click the upload button)
-    const onFileUpload = () => {
-      
-        // Create an object of formData
+      // receives array of files that are done uploading when submit button is clicked
+      const handleSubmit = (event) => {
+        // event.preventDefault()
+        // event.stopPropagation();
+        // event.processQueue();
+        // this.processQueue();
+        // myDropzone.processQueue();
+        const data = new FormData()
+        // console.log(filesData);
+        // data.append('file', filesData)
+        // console.log(data);
         const formData = new FormData();
-      
-        console.log(filesData);
-        // Update the formData object
-        formData.append(
-            "image",
-            filesData);
-        console.log("formData",formData);
-      
-        // Details of the uploaded file
-      
-        // Request made to the backend api
-        // Send formData object
-        axios.post("api/imageupload", formData);
-      };
+        formData.append('image',filesData)
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        }
+        axios.post("http://localhost:8000/api/imageupload",formData,config).then(res => { // then print response status
+            console.warn(res);
+            setData("image",res.data);
+        })
+       
+    }
+    const submit = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log(data);
+        post(route('register'));
+        const baseURL = "http://localhost:8000/api/addnewbook";
+        axios.post(baseURL, data).then((response) => {
+            console.log(response.data);
+            // setPost(response.data);
+            // let myData = Object.entries(response.data).map(
+            //     ([anythingreferetokey, val], i) => {
+            //         return (
+            //             <tr key={i}>
+            //                 <td>{i + 1}</td> <td>{val.title}</td>{" "}
+            //                 <td>{val.description}</td>{" "}
+            //             </tr>
+            //         );
+            //     }
+            // );
+            // setSometData(myData);
+            // setLoader(true);
+        });
+    };
     return (
         <AdminLayout
             auth={props.auth}
@@ -77,6 +109,7 @@ export default function AddNewBooks(props) {
                 <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div className="p-6 bg-white border-b border-gray-200">
                         <div className="col-md-6">
+                        <>
                             <div className="row mt-2">
                                 <div className="col">
                                     <InputLabel forInput="title" value="title" />
@@ -101,51 +134,59 @@ export default function AddNewBooks(props) {
                                 </div>
                             </div>
                             <div className="row mt-2">
-                                <div className="col">
-                                    <InputLabel forInput="imgage" value="Image" />
+                                <div className="col-4">
+                                <Dropzone
+                                    getUploadParams={getUploadParams}
+                                    onChangeStatus={handleChangeStatus}
+                                    onSubmit={handleSubmit}
+                                    accept="image/*,audio/*,video/*"
+                                    />
+                                    {/* <InputLabel forInput="imgage" value="Image" />
                                     <input type="file" onChange={onFileChange} />
                                     <button onClick={onFileUpload}>
                                     Upload!
-                                    </button>       
+                                    </button>        */}
                                 </div>
                             </div>
                             <div className="row mt-2">
                                 <div className="col">
-                                    <InputLabel forInput="publisher" value="Publisher" />
-                                    <select className="form-control" name="publisher" id="publisher"> 
+                                    <InputLabel forInput="publisher_id" value="Publisher" />
+                                    <select onChange={onHandleChange} className="form-control" name="publisher_id" id="publisher_id"> 
                                     {commonData?.publisher ? commonData?.publisher?.map((publish) => (
-                                          <option key={publish?.id}>{publish?.publisher_name}</option>
+                                          <option value={publish?.id} key={publish?.id}>{publish?.publisher_name}</option>
                                       )) : <option>No Publisher</option>}
                                     </select>
                                 </div>
                             </div>
                             <div className="row mt-2">
                                 <div className="col">
-                                    <InputLabel forInput="author" value="Author" />
-                                    <select className="form-control" name="author" id="author"> 
+                                    <InputLabel forInput="author_id" value="Author" />
+                                    <select onChange={onHandleChange} className="form-control" name="author_id" id="author_id"> 
                                     {commonData?.author ? commonData?.author?.map((author) => (
-                                          <option key={author?.id}>{author?.author_name}</option>
+                                          <option value={author?.id} key={author?.id}>{author?.author_name}</option>
                                       )) : <option>No Author</option>}
                                     </select>
                                 </div>
                             </div>
                             <div className="row mt-2">
                                 <div className="col">
-                                    <InputLabel forInput="genre" value="Genre" />
-                                    <select className="form-control" name="genre" id="genre"> 
+                                    <InputLabel forInput="genre_id" value="Genre" />
+                                    <select onChange={onHandleChange} className="form-control" name="genre_id" id="genre_id"> 
                                         {commonData?.genre ? commonData?.genre?.map((genre) => (
-                                          <option key={genre?.id}>{genre?.title}</option>
+                                          <option value={genre?.id} key={genre?.id}>{genre?.title}</option>
                                       )) : <option>No Genre</option>}
                                     </select>
                                 </div>
                             </div>
                             <div className="row mt-3">
                                 <div className="col">
-                                    <PrimaryButton  className=""  processing={processing} >
+                                    <button onClick={submit}>Save</button>
+                                    {/* <PrimaryButton  className="" onClick  processing={processing} >
                                         Add new
-                                    </PrimaryButton>
+                                    </PrimaryButton> */}
                                 </div>
                             </div>
+                            </>
                         </div>
                         {/* {commonData.author ? JSON.stringify(commonData.author) :"false" } */}
                        

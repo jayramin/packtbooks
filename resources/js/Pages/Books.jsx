@@ -137,7 +137,7 @@ export default function Books(props) {
                                                             dataSource?.description
                                                         }
                                                     </td>
-                                                    <td> </td>
+                                                    <td> <button> <MDBIcon icon="trash" className="mr-3" />  </button> </td>
                                                 </tr>
                                             )
                                         )}

@@ -1,3 +1,16 @@
+for use this project follow below command
+
+npm i
+composer update
+php artisan migrate
+php artisan db:seed
+
+
+for data base there is a SQL file named as 
+
+
+
+initial step by step instation for creating new application  
 Step 1: composer create-project laravel/laravel packtbookstore
 
 

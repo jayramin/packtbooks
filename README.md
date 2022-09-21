@@ -1,9 +1,10 @@
 for use this project follow below command
 
-npm i
-composer update
-php artisan migrate
-php artisan db:seed
+1) npm i
+2)composer update
+3)php artisan migrate
+4)php artisan db:seed
+
 
 
 for data base there is a SQL file named as 
